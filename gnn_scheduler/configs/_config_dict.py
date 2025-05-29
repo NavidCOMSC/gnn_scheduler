@@ -8,11 +8,11 @@ from gnn_scheduler.metrics import Accuracy, Precision, Recall, F1Score, Metric
 class ModelConfig:
     metadata: HeteroMetadata = field(
         default_factory=lambda: HeteroMetadata(
-            node_types=["operation", "machine"]
+            node_types=["workorder", "technician"]
         )
     )
     in_channels_dict: dict[str, int] = field(
-        default_factory=lambda: {"operation": 8, "machine": 4}
+        default_factory=lambda: {"workorder": 8, "technician": 4}
     )
     initial_node_features_dim: int = 32
     sigma: float = 1.0
