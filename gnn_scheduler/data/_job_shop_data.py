@@ -19,7 +19,7 @@ class JobShopData(HeteroData):
             # Set increments for each column according to respective node
             # counts
             # TODO: insert the list of nodes for airplane scheduling
-            node_types = ["operation", "machine", "job"]
+            node_types = ["workorder", "technician", "workpackage"]
             for i, node_type in enumerate(node_types):
                 if self[node_type]:
                     increments[i] = self[node_type]["x"].size(0)
