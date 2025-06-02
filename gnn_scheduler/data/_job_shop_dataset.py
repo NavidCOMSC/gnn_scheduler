@@ -73,13 +73,22 @@ class JobShopDataset(InMemoryDataset):
 
     @property
     def processed_file_names(self) -> list[str]:
+        """Returns the list of processed filenames based on the raw filename and step configuration.
+
+        Returns:
+            list[str]: The list of processed filenames. The processed filename is constructed as:
+            <raw_filename_stem>_processed[<_subsetN>].pt
+        """
         raw_filename_stem = os.path.splitext(self.raw_filename)[0]
-        n_step_suffix = (
-            ""
-            if self.store_each_n_steps == 1
-            else f"_subset{self.store_each_n_steps}"
-        )
-        return [f"{raw_filename_stem}_processed{n_step_suffix}.pt"]
+
+        if self.store_each_n_steps == 1:
+            step_suffix = ""  # No suffix if storing every step
+        else:
+            step_suffix = (
+                f"_subset{self.store_each_n_steps}"  # e.g., "_subset10"
+            )
+
+        return [f"{raw_filename_stem}_processed{step_suffix}.pt"]
 
     def download(self):
         if os.path.exists(self.raw_paths[0]):
