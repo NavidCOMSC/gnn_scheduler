@@ -69,6 +69,11 @@ class JobShopDataset(InMemoryDataset):
 
     @property
     def raw_file_names(self) -> list[str]:
+        """Returns the raw input filename(s) as a list.
+
+        Returns:
+            list[str]: The list of raw input filenames.
+        """
         return [self.raw_filename]
 
     @property
