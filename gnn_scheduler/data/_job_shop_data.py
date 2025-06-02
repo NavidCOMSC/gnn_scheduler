@@ -22,6 +22,8 @@ class JobShopData(HeteroData):
             for i, node_type in enumerate(node_types):
                 if self[node_type]:
                     increments[i] = self[node_type]["x"].size(0)
+                    # TODO: Handle the dictionary key and value association
+            # for the node types
 
             return increments
 
