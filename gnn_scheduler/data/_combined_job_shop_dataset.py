@@ -1,4 +1,5 @@
 import os
+from typing import Sized
 
 import tqdm
 from torch_geometric.data import InMemoryDataset
@@ -66,6 +67,7 @@ class CombinedJobShopDataset(InMemoryDataset):
             if self.log:
                 print(f"Processing dataset {i}/{len(self.dataset_manager)}")
             dataset = dataloader.dataset
+            assert isinstance(dataset, InMemoryDataset)
 
             if self.log:
                 print(f"Processing dataset with {len(dataset)} examples")
