@@ -131,7 +131,7 @@ class Trainer:
                 "cuda" if torch.cuda.is_available() else "cpu"
             )
         else:
-            self.device = device
+            self.device = torch.device(device)
 
         self.model = self.model.to(self.device)
 
@@ -753,7 +753,7 @@ class Trainer:
             Tuple of (inputs, targets) moved to device
         """
         if isinstance(batch, JobShopData):
-            inputs = batch.to(self.device)
+            inputs = batch.to(self.device)  # type: ignore[arg-type]
             targets = batch.y.to(self.device)
             return inputs, targets
 
