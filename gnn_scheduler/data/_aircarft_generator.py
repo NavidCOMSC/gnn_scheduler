@@ -220,78 +220,80 @@ class AircraftGenerator:
         for i in range(1, num_instances + 1):
             generate_single_instance(i)
 
-    def main(self):
-        """Main method to generate aircraft instances."""
-        parser = argparse.ArgumentParser(
-            description="Generate aircraft turnaround schedule CSV files."
-        )
 
-        parser.add_argument(
-            "--work_packages",
-            type=str,
-            required=True,
-            help="Path to work packages CSV file",
-        )
-        parser.add_argument(
-            "--instance_dir",
-            type=str,
-            required=True,
-            help="Output directory for generated CSV files",
-        )
-        parser.add_argument(
-            "--num_instances",
-            type=int,
-            default=10,
-            help="Number of instances to generate (default: 10)",
-        )
-        parser.add_argument(
-            "--seed",
-            type=int,
-            default=None,
-            help="Random seed for reproducibility (default: None)",
-        )
-        parser.add_argument(
-            "--start_year",
-            type=int,
-            default=None,
-            help="Start year for the generated dates (default: current year)",
-        )
+def main():
+    """Main method to generate aircraft instances."""
+    parser = argparse.ArgumentParser(
+        description="Generate aircraft turnaround schedule CSV files."
+    )
 
-        args = parser.parse_args()
+    parser.add_argument(
+        "--work_packages",
+        type=str,
+        required=True,
+        help="Path to work packages CSV file",
+    )
+    parser.add_argument(
+        "--instance_dir",
+        type=str,
+        required=True,
+        help="Output directory for generated CSV files",
+    )
+    parser.add_argument(
+        "--num_instances",
+        type=int,
+        default=10,
+        help="Number of instances to generate (default: 10)",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for reproducibility (default: None)",
+    )
+    parser.add_argument(
+        "--start_year",
+        type=int,
+        default=None,
+        help="Start year for the generated dates (default: current year)",
+    )
 
-        # Configure logging
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    args = parser.parse_args()
+
+    # Configure logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    )
+
+    # Generator parameters
+    params = {
+        "work_packages_file": args.work_packages,
+        "instance_dir": args.instance_dir,
+        "turnaround_scaling_factor": 1.2,
+        "num_instances": args.num_instances,
+        "num_aircrafts": 20,
+        "num_technicians": 36,
+        "shift_duration": 8,
+        "min_total_man_hours_percentage": 0.7,
+        "max_total_man_hours_percentage": 0.9,
+        "max_turnaround_minutes": 1440,
+        "max_attempts": 1000,
+        "seed": args.seed,
+        "start_year": args.start_year or datetime.now().year,
+    }
+
+    try:
+        generator = AircraftGenerator(**params)
+        generator.generate_aircraft_instances(**params)
+        logging.info(
+            f"Successfully generated {params['num_instances']} instances in: "
+            f"{params['instance_dir']}"
         )
+    except Exception as e:
+        logging.exception("Aircraft generation failed")
+        sys.exit(1)
 
-        # Generator parameters
-        params = {
-            "work_packages_file": args.work_packages,
-            "instance_dir": args.instance_dir,
-            "turnaround_scaling_factor": 1.2,
-            "num_instances": args.num_instances,
-            "num_aircrafts": 20,
-            "num_technicians": 36,
-            "shift_duration": 8,
-            "min_total_man_hours_percentage": 0.7,
-            "max_total_man_hours_percentage": 0.9,
-            "max_turnaround_minutes": 1440,
-            "max_attempts": 1000,
-            "seed": args.seed,
-            "start_year": args.start_year or datetime.now().year,
-        }
 
-        try:
-            generator = AircraftGenerator(**params)
-            generator.generate_aircraft_instances(**params)
-            logging.info(
-                f"Successfully generated {params['num_instances']} instances in: "
-                f"{params['instance_dir']}"
-            )
-        except Exception as e:
-            logging.exception("Aircraft generation failed")
-            sys.exit(1)
-
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
