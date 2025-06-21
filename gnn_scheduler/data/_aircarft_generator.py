@@ -23,7 +23,7 @@ class AircraftGenerator:
     def __init__(
         self,
         work_packages_file: str,
-        output_dir: str,
+        instance_dir: str,
         turnaround_scaling_factor: float = 1.2,
         num_instances: int = 10,
         num_aircrafts: int = 20,
@@ -37,7 +37,7 @@ class AircraftGenerator:
         start_year: Optional[int] = None,
     ):
         self.work_packages_file = work_packages_file
-        self.output_dir = output_dir
+        self.instance_dir = instance_dir
         self.turnaround_scaling_factor = turnaround_scaling_factor
         self.num_instances = num_instances
         self.num_aircrafts = num_aircrafts
@@ -62,7 +62,7 @@ class AircraftGenerator:
     def generate_aircraft_instances(
         self,
         work_packages_file: str,
-        output_dir: str,
+        instance_dir: str,
         turnaround_scaling_factor: float,
         num_instances: int,
         num_aircrafts: int,
@@ -103,7 +103,7 @@ class AircraftGenerator:
                 f"requested maximum ({raw_max_man:.1f}h); allowing repetition to dilute."
             )
 
-        os.makedirs(output_dir, exist_ok=True)
+        os.makedirs(instance_dir, exist_ok=True)
 
         def generate_single_instance(instance_id: int):
             coverage_fails = manhour_fails = turnaround_fails = 0
@@ -201,7 +201,7 @@ class AircraftGenerator:
                     .apply(lambda s: s.replace("nan", "").strip(" ,"))
                 )
                 fn = os.path.join(
-                    output_dir, f"aircrafts_instance_{instance_id}.csv"
+                    instance_dir, f"aircrafts_instance_{instance_id}.csv"
                 )
                 out_df.to_csv(fn, index=False)
                 return
