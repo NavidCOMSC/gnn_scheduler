@@ -1,0 +1,25 @@
+﻿WP number,WP description,Minutes,Hours,Required Certified Personnnel,Number of Personnel,Man_Hours,WP requirement
+WP1,Engine Oil Level Check & Replenishment,40,0.7,B1 Technician,2,1.4,Both technicians must have a B1 license
+WP2,Hydraulic Fluid Level Check & Replenishment ,40,0.7,B1 Technician,2,1.4,Both technicians must have a B1 license
+WP3,Landing Gear & Wheel Well Visual Inspection ,60,1,B1 Technician,2,2,Both technicians must have a B1 license
+WP4,Brake Wear Indicator Check ,30,0.5,B1 Technician,2,1,Both technicians must have a B1 license
+WP5,Oxygen System Pressure Check ,40,0.7,B1 Technician,2,1.4,Both technicians must have a B1 license
+WP6,Navigation & Exterior Lighting Check,30,0.5,B2 Technician,2,1,Both technicians must have a B2 license
+WP7,"Flight Deck Systems Check (basic avionics self-test, CB panel scan, indicators) ",30,0.5,B2 Technician,2,1,Both technicians must have a B2 license
+WP8,Fuel Leak & Drain Checks ,30,0.5,B1 Technician,2,1,Both technicians must have a B1 license
+WP9,Engine Cowlings & Fan Blade Visual Inspection ,60,1,B1 Technician,2,2,Both technicians must have a B1 license
+WP10,Deeper Landing Gear & Tire Inspection ,60,1,B1 Technician,3,3,All 3 technicians must have a B1 license
+WP11,Pitot-Static Probe & Sensor Cleaning ,30,0.5,B2 Technician,2,1,Both technicians must have a B2 license
+WP12,Battery Voltage Check & Charging (if required) ,40,0.7,B2 Technician,2,1.4,Both technicians must have a B2 license
+WP13,"Emergency Equipment Inspection (fire extinguishers, oxygen masks, ELT, life vests) ",60,1,"B1 Technician, B2 Technician",2,2,"One person must have a B1 license, and one must have a B2 license"
+WP14,Engine Oil Sampling for Wear Analysis ,60,1,B1 Technician,2,2,Both technicians must have a B1 license
+WP15,"Hydraulic System Leak Inspection (hoses, actuators, reservoirs) ",80,1.3,B1 Technician,3,3.9,All 3 technicians must have a B1 license
+WP16,"Thrust Reverser System Check (Locks, Actuators, Linkage, Seals) ",80,1.3,B1 Technician,3,3.9,All 3 technicians must have a B1 license
+WP17,APU Operational Test & Exhaust Inspection ,80,1.3,"B1 Technician, B2 Technician",3,3.9,"At least one B1 Engineer and one B2 Engineer are required; the third person can be either, depending on workload."
+WP18,Landing Gear Retraction Test (if needed) ,80,1.3,B1 Technician,3,3.9,All 3 technicians must have a B1 license
+WP19,"Deep Structural Inspection (Access Panels Opened, Control Surface Linkages Checked)",360,6,B1 Engineer,3,18,All 3 engineers must have a B1 license
+WP20,Engine Borescope Inspection (If Required by Trends) ,300,5,B1 Engineer,3,15,All 3 engineers must have a B1 license
+WP21,"Avionics & Electrical System Tests (Battery Load, Generator, Busbar Loads, Circuit Breakers)",240,4,B2 Engineer,3,12,All 3 engineers must have a B2 license
+WP22,Fire Detection & Suppression System Test ,180,3,B2 Engineer,3,9,All 3 engineers must have a B2 license
+WP23,"Flight Control System Check (Trim Actuators, Rudder, Elevator, Ailerons, Flaps, Slats) ",300,5,"B1 Engineer, B2 Engineer",3,15,"At least one B1 Engineer and one B2 Engineer are required; the third person can be either, depending on workload."
+WP24,Fuel Tank & Fuel Line Integrity Inspection ,240,4,B1 Engineer,3,12,All 3 engineers must have a B1 license
