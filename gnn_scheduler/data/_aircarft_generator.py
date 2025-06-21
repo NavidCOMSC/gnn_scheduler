@@ -1,3 +1,4 @@
+from ast import main
 import os
 import random
 import argparse
@@ -257,3 +258,40 @@ class AircraftGenerator:
         )
 
         args = parser.parse_args()
+
+        # Configure logging
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        )
+
+        # Generator parameters
+        params = {
+            "work_packages_file": args.work_packages,
+            "instance_dir": args.instance_dir,
+            "turnaround_scaling_factor": 1.2,
+            "num_instances": args.num_instances,
+            "num_aircrafts": 20,
+            "num_technicians": 36,
+            "shift_duration": 8,
+            "min_total_man_hours_percentage": 0.7,
+            "max_total_man_hours_percentage": 0.9,
+            "max_turnaround_minutes": 1440,
+            "max_attempts": 1000,
+            "seed": args.seed,
+            "start_year": args.start_year or datetime.now().year,
+        }
+
+        try:
+            generator = AircraftGenerator(**params)
+            generator.generate_aircraft_instances(**params)
+            logging.info(
+                f"Successfully generated {params['num_instances']} instances in: "
+                f"{params['instance_dir']}"
+            )
+        except Exception as e:
+            logging.exception("Aircraft generation failed")
+            sys.exit(1)
+
+    if __name__ == "__main__":
+        main()
