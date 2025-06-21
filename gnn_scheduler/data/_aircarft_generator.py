@@ -58,3 +58,49 @@ class AircraftGenerator:
         # check for missing the datetime input
         if self.start_year is None:
             self.start_year = datetime.now().year
+
+    def generate_aircraft_instances(
+        self,
+        work_packages_file: str,
+        output_dir: str,
+        turnaround_scaling_factor: float,
+        num_instances: int,
+        num_aircrafts: int,
+        num_technicians: int,
+        shift_duration: int,
+        min_total_man_hours_percentage: float,
+        max_total_man_hours_percentage: float,
+        max_turnaround_minutes: int,
+        max_attempts: int,
+        seed: Optional[int] = None,
+        start_year: Optional[int] = None,
+    ) -> None:
+
+        # loading and reading the work packages file
+        df = pd.read_csv(work_packages_file)
+        df["WP number"] = df["WP number"].astype(str)
+        df["Minutes"] = df["Minutes"].fillna(0)
+        df["Man_Hours"] = df["Man_Hours"].fillna(0)
+
+        wps = df.to_dict("records")
+        wp_map = {wp["WP number"]: wp for wp in wps}
+        all_wp_numbers = [wp["WP number"] for wp in wps]
+
+        # Compute man-hour window
+        capacity = num_technicians * shift_duration  # 288 h
+        raw_min_man = min_total_man_hours_percentage * capacity  # 201.6 h
+        raw_max_man = max_total_man_hours_percentage * capacity  # 259.2 h
+
+        total_unique_hours = sum(wp["Man_Hours"] for wp in wps)
+        if total_unique_hours < raw_min_man:
+            logger.warning(
+                f"Total unique WP man-hours ({total_unique_hours:.1f}h) below "
+                f"requested minimum ({raw_min_man:.1f}h); allowing repetition to fill."
+            )
+        if total_unique_hours > raw_max_man:
+            logger.warning(
+                f"Total unique WP man-hours ({total_unique_hours:.1f}h) above "
+                f"requested maximum ({raw_max_man:.1f}h); allowing repetition to dilute."
+            )
+
+        os.makedirs(output_dir, exist_ok=True)
