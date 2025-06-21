@@ -1,6 +1,8 @@
 import os
 import random
+import argparse
 import logging
+import sys
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -216,3 +218,22 @@ class AircraftGenerator:
 
         for i in range(1, num_instances + 1):
             generate_single_instance(i)
+
+    def main(self):
+        """Main method to generate aircraft instances."""
+        parser = argparse.ArgumentParser(
+            description="Generate aircraft turnaround schedule CSV files."
+        )
+
+        parser.add_argument(
+            "--work_packages",
+            type=str,
+            required=True,
+            help="Path to work packages CSV file",
+        )
+        parser.add_argument(
+            "--instance_dir",
+            type=str,
+            required=True,
+            help="Output directory for generated CSV files",
+        )
