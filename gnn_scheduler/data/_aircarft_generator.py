@@ -237,3 +237,23 @@ class AircraftGenerator:
             required=True,
             help="Output directory for generated CSV files",
         )
+        parser.add_argument(
+            "--num_instances",
+            type=int,
+            default=10,
+            help="Number of instances to generate (default: 10)",
+        )
+        parser.add_argument(
+            "--seed",
+            type=int,
+            default=None,
+            help="Random seed for reproducibility (default: None)",
+        )
+        parser.add_argument(
+            "--start_year",
+            type=int,
+            default=None,
+            help="Start year for the generated dates (default: current year)",
+        )
+
+        args = parser.parse_args()
