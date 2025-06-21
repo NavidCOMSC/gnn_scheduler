@@ -213,3 +213,6 @@ class AircraftGenerator:
                 f"turnaround_fails={turnaround_fails}"
             )
             raise RuntimeError(f"Could not generate instance {instance_id}")
+
+        for i in range(1, num_instances + 1):
+            generate_single_instance(i)
