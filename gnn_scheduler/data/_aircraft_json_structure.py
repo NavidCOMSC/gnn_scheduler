@@ -67,3 +67,10 @@ def parse_files(work_packages_file, aircrafts_file):
                 wo_name = wo_columns[j]
                 wo_index = wo_index_map[wo_name]
                 wp_dict[wp_name].append((wo_index, duration, staff_indices))
+
+    # Read aircrafts CSV file
+    duration_matrix = []
+    machine_matrix = []
+    job_sequences = []
+    landing_time_list = []
+    departing_time_list = []
