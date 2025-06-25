@@ -25,3 +25,45 @@ def parse_files(work_packages_file, aircrafts_file):
             if col.startswith("WO") and not col.endswith("staff")
         ]
         wo_index_map = {wo: idx + 1 for idx, wo in enumerate(wo_columns)}
+
+        for row in reader:
+            if not row:
+                continue
+            wp_name = row[0].strip()
+            wp_dict[wp_name] = []
+            for j in range(len(wo_columns)):
+                col_index = 1 + j * 2
+                if col_index >= len(row):
+                    break
+                dur_str = row[col_index].strip()
+                if not dur_str:
+                    continue
+                # Convert duration to integer, handle potential errors
+                try:
+                    duration = int(dur_str)
+                except ValueError:
+                    print(
+                        f"Invalid duration '{dur_str}' for work order '{wo_columns[j]}' in work package '{wp_name}'. Skipping."
+                    )
+                    continue
+                staff_str = (
+                    row[col_index + 1].strip()
+                    if col_index + 1 < len(row)
+                    else ""
+                )
+                staff_list = []
+                if staff_str:
+                    staff_list = [
+                        s.strip().strip('"').strip()
+                        for s in staff_str.split(",")
+                        if s.strip()
+                    ]
+
+                staff_indices = [
+                    staff_index_map[s]
+                    for s in staff_list
+                    if s in staff_index_map
+                ]
+                wo_name = wo_columns[j]
+                wo_index = wo_index_map[wo_name]
+                wp_dict[wp_name].append((wo_index, duration, staff_indices))
