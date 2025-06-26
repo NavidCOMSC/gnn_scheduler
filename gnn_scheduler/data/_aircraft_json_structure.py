@@ -84,6 +84,25 @@ def parse_files(work_packages_file, aircrafts_file):
             ac_serial = row[0].strip()
             landing_date = row[1].strip()
             landing_time = row[2].strip()
-            departing_date = row[3].strip()
+            departure_date = row[3].strip()
             departing_time = row[4].strip()
             wp_string = row[6].strip()
+
+            landing_str = landing_date.replace("/", ":") + "-" + landing_time
+            departing_str = (
+                departure_date.replace("/", ":") + "-" + departing_time
+            )
+
+            wp_list = [wp.strip() for wp in wp_string.split(",")]
+
+            durations = []
+            machines = []
+            sequences = []
+
+            for wp in wp_list:
+                if wp in wp_dict:
+                    for wo_index, dur, staff_indices in wp_dict[wp]:
+                        for staff_idx in staff_indices:
+                            durations.append(dur)
+                            machines.append(staff_idx)
+                            sequences.append(wo_index)
