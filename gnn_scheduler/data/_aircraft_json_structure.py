@@ -106,3 +106,9 @@ def parse_files(work_packages_file, aircrafts_file):
                             durations.append(dur)
                             machines.append(staff_idx)
                             sequences.append(wo_index)
+
+            duration_matrix.append(durations)
+            machine_matrix.append(machines)
+            job_sequences.append(sequences)
+            landing_time_list.append(landing_str)
+            departing_time_list.append(departing_str)
