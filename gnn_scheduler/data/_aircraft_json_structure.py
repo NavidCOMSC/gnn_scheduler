@@ -128,3 +128,10 @@ def parse_files(work_packages_file, aircrafts_file):
     }
 
     return output
+
+
+result = parse_files(
+    "work_packages_work_orders.csv", "aircrafts_instance_1.csv"
+)
+with open("output.json", "w") as f:
+    json.dump(result, f, indent=4)
