@@ -1,11 +1,13 @@
 import csv
 import json
+import os
+import glob
 
 
 def parse_files(work_packages_file, aircrafts_file):
 
     # Mpaping Resources(Technicians) to their IDs
-    staff_index_map = {
+    STAFF_INDEX_MAP = {
         "B1 Technician": 1,
         "B2 Technician": 2,
         "B1 Engineer": 3,
@@ -60,9 +62,9 @@ def parse_files(work_packages_file, aircrafts_file):
                     ]
 
                 staff_indices = [
-                    staff_index_map[s]
+                    STAFF_INDEX_MAP[s]
                     for s in staff_list
-                    if s in staff_index_map
+                    if s in STAFF_INDEX_MAP
                 ]
                 wo_name = wo_columns[j]
                 wo_index = wo_index_map[wo_name]
