@@ -112,3 +112,19 @@ def parse_files(work_packages_file, aircrafts_file):
             job_sequences.append(sequences)
             landing_time_list.append(landing_str)
             departing_time_list.append(departing_str)
+
+    # JSON structure for aircrafts
+    output = {
+        "instance": {
+            "name": "aircraft_instance_1",
+            "duration_matrix": duration_matrix,
+            "machine_matrix": machine_matrix,
+            "metadata": {},
+        },
+        "job_sequences": job_sequences,
+        "landing_time": landing_time_list,
+        "departing_time": departing_time_list,
+        "metadata": {"status": "optimal", "makespan": None},
+    }
+
+    return output
