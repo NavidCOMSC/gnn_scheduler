@@ -73,12 +73,23 @@ def read_work_packages(work_packages_file):
 
     return wp_dict, wo_columns
 
+
+def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
+    """
+    Parse a single aircraft CSV file and create a JSON structure.
+    Args:
+        aircrafts_file: Path to the aircrafts CSV file.
+        wp_dict: Dictionary mapping work packages to their work orders.
+        wo_index_map: Mapping of work order names to their indices.
+    """
+
     # Read aircrafts CSV file
     duration_matrix = []
     machine_matrix = []
     job_sequences = []
     landing_time_list = []
     departing_time_list = []
+    instance_name = os.path.splitext(os.path.basename(aircrafts_file))[0]
 
     with open(aircrafts_file, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
