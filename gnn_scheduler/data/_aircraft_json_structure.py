@@ -167,3 +167,13 @@ def parse_aircraft_directory(work_packages_file, aircrafts_dir):
         all_instances.append(instance_data)
 
     return all_instances
+
+
+# Example usage
+if __name__ == "__main__":
+    work_packages_file = "work_packages_work_orders.csv"
+    aircrafts_dir = "path/to/aircrafts_directory"  # Update this path
+
+    result = parse_aircraft_directory(work_packages_file, aircrafts_dir)
+    with open("output.json", "w") as f:
+        json.dump(result, f, indent=4)
