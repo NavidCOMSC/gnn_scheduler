@@ -129,10 +129,9 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
             landing_time_list.append(landing_str)
             departing_time_list.append(departing_str)
 
-    # JSON structure for aircrafts
-    output = {
+    return {
         "instance": {
-            "name": "aircraft_instance_1",
+            "name": instance_name,
             "duration_matrix": duration_matrix,
             "machine_matrix": machine_matrix,
             "metadata": {},
@@ -143,11 +142,28 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
         "metadata": {"status": "optimal", "makespan": None},
     }
 
-    return output
 
+def parse_aircraft_directory(work_packages_file, aircrafts_dir):
+    """
+    Parse all aircraft CSV files in a directory and create a JSON structure.
+    Args:
+        work_packages_file: Path to the work packages CSV file.
+        aircrafts_dir: Directory containing aircrafts CSV files.
+    """
 
-result = parse_files(
-    "work_packages_work_orders.csv", "aircrafts_instance_1.csv"
-)
-with open("output.json", "w") as f:
-    json.dump(result, f, indent=4)
+    wp_dict, wo_index_map = read_work_packages(work_packages_file)
+    aircraft_files = glob.glob(
+        os.path.join(aircrafts_dir, "aircrafts_instance_*.csv")
+    )
+    aircraft_files.sort(
+        key=lambda f: int(os.path.basename(f).split("_")[-1].split(".")[0])
+    )
+
+    all_instances = []
+    for aircraft_file in aircraft_files:
+        instance_data = parse_aircraft_file(
+            aircraft_file, wp_dict, wo_index_map
+        )
+        all_instances.append(instance_data)
+
+    return all_instances
