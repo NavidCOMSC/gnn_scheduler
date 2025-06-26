@@ -74,3 +74,16 @@ def parse_files(work_packages_file, aircrafts_file):
     job_sequences = []
     landing_time_list = []
     departing_time_list = []
+
+    with open(aircrafts_file, "r", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        next(reader)  # Skip header
+        for row in reader:
+            if not row:
+                continue
+            ac_serial = row[0].strip()
+            landing_date = row[1].strip()
+            landing_time = row[2].strip()
+            departing_date = row[3].strip()
+            departing_time = row[4].strip()
+            wp_string = row[6].strip()
