@@ -100,25 +100,21 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
                 continue
             ac_serial = row[0].strip()
             landing_date = row[1].strip()
-            landing_time = row[2].strip()
+            landing_time = row[2].strip().replace("/", ":")
             departure_date = row[3].strip()
-            departing_time = row[4].strip()
+            departing_time = row[4].strip().replace("/", ":")
             wp_string = row[6].strip()
 
-            landing_str = landing_date.replace("/", ":") + "-" + landing_time
-            departing_str = (
-                departure_date.replace("/", ":") + "-" + departing_time
-            )
+            landing_str = landing_date + "-" + landing_time
+            departing_str = departure_date + "-" + departing_time
 
             wp_list = [wp.strip() for wp in wp_string.split(",")]
 
             # Convert landing and departing times to datetime objects and then to Unix timestamps
             try:
-                landing_dt = datetime.strptime(
-                    landing_str.replace(":", "/"), "%d/%m/%Y-%H:%M"
-                )
+                landing_dt = datetime.strptime(landing_str, "%d/%m/%Y-%H:%M")
                 departing_dt = datetime.strptime(
-                    departing_str.replace(":", "/"), "%d/%m/%Y-%H:%M"
+                    departing_str, "%d/%m/%Y-%H:%M"
                 )
 
                 landing_timestamp = int(landing_dt.timestamp())
