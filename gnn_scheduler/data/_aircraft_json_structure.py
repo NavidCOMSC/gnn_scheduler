@@ -115,10 +115,10 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
             # Convert landing and departing times to datetime objects and then to Unix timestamps
             try:
                 landing_dt = datetime.strptime(
-                    landing_str.replace(":", "/"), "%Y/%m/%d-%H:%M"
+                    landing_str.replace(":", "/"), "%d/%m/%Y-%H:%M"
                 )
                 departing_dt = datetime.strptime(
-                    departing_str.replace(":", "/"), "%Y/%m/%d-%H:%M"
+                    departing_str.replace(":", "/"), "%d/%m/%Y-%H:%M"
                 )
 
                 landing_timestamp = int(landing_dt.timestamp())
