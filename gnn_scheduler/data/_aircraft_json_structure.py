@@ -121,6 +121,9 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
                     departing_str.replace(":", "/"), "%Y/%m/%d-%H:%M"
                 )
 
+                landing_timestamp = int(landing_dt.timestamp())
+                departing_timestamp = int(departing_dt.timestamp())
+
                 durations = []
                 machines = []
                 sequences = []
@@ -136,8 +139,8 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
                 duration_matrix.append(durations)
                 machine_matrix.append(machines)
                 job_sequences.append(sequences)
-                landing_time_list.append(landing_str)
-                departing_time_list.append(departing_str)
+                landing_time_list.append(landing_timestamp)
+                departing_time_list.append(departing_timestamp)
             except ValueError as e:
                 print(
                     f"Error parsing date/time for aircraft {ac_serial} in file {aircrafts_file}: {e}"
