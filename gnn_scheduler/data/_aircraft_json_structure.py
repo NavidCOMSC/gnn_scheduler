@@ -149,8 +149,8 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
             "duration_matrix": duration_matrix,
             "machine_matrix": machine_matrix,
             "metadata": {
-                "landing_time": landing_time_list,
-                "departing_time": departing_time_list,
+                "arrival_times_matrix": landing_time_list,
+                "departing_times_matrix": departing_time_list,
             },
         }
         # "job_sequences": job_sequences,
