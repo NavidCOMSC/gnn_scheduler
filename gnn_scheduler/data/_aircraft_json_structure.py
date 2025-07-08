@@ -134,11 +134,12 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
             "name": instance_name,
             "duration_matrix": duration_matrix,
             "machine_matrix": machine_matrix,
-            "metadata": {},
+            "metadata": {
+                "landing_time": landing_time_list,
+                "departing_time": departing_time_list,
+            },
         },
         "job_sequences": job_sequences,
-        "landing_time": landing_time_list,
-        "departing_time": departing_time_list,
         "metadata": {"status": "optimal", "makespan": None},
     }
 
