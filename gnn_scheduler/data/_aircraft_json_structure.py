@@ -2,6 +2,7 @@ import csv
 import json
 import os
 import glob
+from datetime import datetime
 
 
 # Mpaping Resources(Technicians) to their IDs
@@ -111,23 +112,37 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
 
             wp_list = [wp.strip() for wp in wp_string.split(",")]
 
-            durations = []
-            machines = []
-            sequences = []
+            # Convert landing and departing times to datetime objects and then to Unix timestamps
+            try:
+                landing_dt = datetime.strptime(
+                    landing_str.replace(":", "/"), "%Y/%m/%d-%H:%M"
+                )
+                departing_dt = datetime.strptime(
+                    departing_str.replace(":", "/"), "%Y/%m/%d-%H:%M"
+                )
 
-            for wp in wp_list:
-                if wp in wp_dict:
-                    for wo_index, dur, staff_indices in wp_dict[wp]:
-                        for staff_idx in staff_indices:
-                            durations.append(dur)
-                            machines.append(staff_idx)
-                            sequences.append(wo_index)
+                durations = []
+                machines = []
+                sequences = []
 
-            duration_matrix.append(durations)
-            machine_matrix.append(machines)
-            job_sequences.append(sequences)
-            landing_time_list.append(landing_str)
-            departing_time_list.append(departing_str)
+                for wp in wp_list:
+                    if wp in wp_dict:
+                        for wo_index, dur, staff_indices in wp_dict[wp]:
+                            for staff_idx in staff_indices:
+                                durations.append(dur)
+                                machines.append(staff_idx)
+                                sequences.append(wo_index)
+
+                duration_matrix.append(durations)
+                machine_matrix.append(machines)
+                job_sequences.append(sequences)
+                landing_time_list.append(landing_str)
+                departing_time_list.append(departing_str)
+            except ValueError as e:
+                print(
+                    f"Error parsing date/time for aircraft {ac_serial} in file {aircrafts_file}: {e}"
+                )
+                continue
 
     return {
         "instance": {
