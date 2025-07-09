@@ -120,32 +120,52 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
                     departing_str, "%d/%m/%Y-%H:%M"
                 )
                 aircraft_data.append((landing_dt, departing_dt, wp_list))
-
-                landing_timestamp = int(landing_dt.timestamp())
-                departing_timestamp = int(departing_dt.timestamp())
-
-                durations = []
-                machines = []
-                sequences = []
-
-                for wp in wp_list:
-                    if wp in wp_dict:
-                        for wo_index, dur, staff_indices in wp_dict[wp]:
-                            for staff_idx in staff_indices:
-                                durations.append(dur)
-                                machines.append(staff_idx)
-                                sequences.append(wo_index)
-
-                duration_matrix.append(durations)
-                machine_matrix.append(machines)
-                job_sequences.append(sequences)
-                landing_time_list.append(landing_timestamp)
-                departing_time_list.append(departing_timestamp)
             except ValueError as e:
                 print(
                     f"Error parsing date/time for aircraft {ac_serial} in file {aircrafts_file}: {e}"
                 )
                 continue
+
+    # Search and store the earliest landing time in the aircraft data
+    if not aircraft_data:
+        return {
+            "instance": {
+                "name": instance_name,
+                "duration_matrix": [],
+                "machine_matrix": [],
+                "metadata": {},
+            }
+        }
+
+    min_landing_dt = min(landing_dt for landing_dt, _, _ in aircraft_data)
+
+    # Process each aircraft with minutes relative to min_landing_dt
+    for landing_dt, departing_dt, wp_list in aircraft_data:
+        # Convert to minutes since earliest landing
+        landing_minutes = int(
+            (landing_dt - min_landing_dt).total_seconds() / 60
+        )
+        departing_minutes = int(
+            (departing_dt - min_landing_dt).total_seconds() / 60
+        )
+
+        durations = []
+        machines = []
+        sequences = []
+
+        for wp in wp_list:
+            if wp in wp_dict:
+                for wo_index, dur, staff_indices in wp_dict[wp]:
+                    for staff_idx in staff_indices:
+                        durations.append(dur)
+                        machines.append(staff_idx)
+                        sequences.append(wo_index)
+
+        duration_matrix.append(durations)
+        machine_matrix.append(machines)
+        job_sequences.append(sequences)
+        landing_time_list.append(landing_minutes)
+        departing_time_list.append(departing_minutes)
 
     return {
         "instance": {
