@@ -92,6 +92,9 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
     departing_time_list = []
     instance_name = os.path.splitext(os.path.basename(aircrafts_file))[0]
 
+    # Store aircraft data temporarily to find the earliest landing time
+    aircraft_data = []
+
     with open(aircrafts_file, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
         next(reader)  # Skip header
@@ -116,6 +119,7 @@ def parse_aircraft_file(aircrafts_file, wp_dict, wo_index_map):
                 departing_dt = datetime.strptime(
                     departing_str, "%d/%m/%Y-%H:%M"
                 )
+                aircraft_data.append((landing_dt, departing_dt, wp_list))
 
                 landing_timestamp = int(landing_dt.timestamp())
                 departing_timestamp = int(departing_dt.timestamp())
